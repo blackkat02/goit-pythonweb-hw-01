@@ -11,25 +11,24 @@ class Book:
         self.author = author
         self.year = year
 
-# Принцип розділення інтерфейсів (ISP)
-class BookAdder(ABC):
+class LibraryInterface(ABC):
+
     @abstractmethod
     def add_book(self, book: Book):
         pass
 
-class BookRemover(ABC):
     @abstractmethod
     def remove_book(self, title: str):
         pass
 
-class BookViewer(ABC):
     @abstractmethod
-    def show_books(self):
+    def show_booksфвв(self) -> list[Book]:
         pass
+
 
 # Принцип підстановки Лісков (LSP) та Принцип інверсії залежностей (DIP)
 # Library тепер залежить від абстракцій (інтерфейсів)
-class Library(BookAdder, BookRemover, BookViewer):
+class Library(LibraryInterface):
     def __init__(self):
         self.books: list[Book] = []
 
@@ -49,7 +48,7 @@ class Library(BookAdder, BookRemover, BookViewer):
 
 # Принцип відкритості/закритості (OCP)
 class LibraryManager:
-    def __init__(self, library: BookAdder and BookRemover and BookViewer):
+    def __init__(self, library: Library.add_book and Library.remove_book and Library.show_books):
         self.library = library
 
     def add_book(self, title: str, author: str, year: int):
