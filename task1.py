@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
-import logging
-
-# Налаштування логування
-logging.basicConfig(level=logging.INFO, format='%(message)s')
+from logger import logger
 
 class Vehicle(ABC):
     
@@ -18,7 +15,7 @@ class Car(Vehicle):
         self.region = region
 
     def start_engine(self):
-        logging.info(f"{self.make} {self.model} ({self.region}): Двигун запущено.")
+        logger.info(f"{self.make} {self.model} ({self.region}): Двигун запущено.")
 
 class Motorcycle(Vehicle):
     def __init__(self, make: str, model: str, region: str):
@@ -27,7 +24,7 @@ class Motorcycle(Vehicle):
         self.region = region
 
     def start_engine(self):
-        logging.info(f"{self.make} {self.model} ({self.region}): Мотор заведено.")
+        logger.info(f"{self.make} {self.model} ({self.region}): Мотор заведено.")
 
 # ----- Абстрактна фабрика -----
 class VehicleFactory(ABC):
@@ -43,21 +40,21 @@ class VehicleFactory(ABC):
 # ----- Конкретні фабрики -----
 class USVehicleFactory(VehicleFactory):
     def create_car(self, make: str, model: str) -> Car:
-        logging.info(f"Створення автомобіля для США: {make} {model}")
+        logger.info(f"Створення автомобіля для США: {make} {model}")
         return Car(make, model, "US Spec")
 
     def create_motorcycle(self, make: str, model: str) -> Motorcycle:
-        logging.info(f"Створення мотоцикла для США: {make} {model}")
+        logger.info(f"Створення мотоцикла для США: {make} {model}")
         return Motorcycle(make, model, "US Spec")
 
 
 class EUVehicleFactory(VehicleFactory):
     def create_car(self, make: str, model: str) -> Car:
-        logging.info(f"Створення автомобіля для ЄС: {make} {model}")
+        logger.info(f"Створення автомобіля для ЄС: {make} {model}")
         return Car(make, model, "EU Spec")
 
     def create_motorcycle(self, make: str, model: str) -> Motorcycle:
-        logging.info(f"Створення мотоцикла для ЄС: {make} {model}")
+        logger.info(f"Створення мотоцикла для ЄС: {make} {model}")
         return Motorcycle(make, model, "EU Spec")
 
 # ----- Використання -----

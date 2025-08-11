@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
 import logging
+from logger import logger
 
 # Налаштування логування, щоб замінити print
-logging.basicConfig(level=logging.INFO, format='%(message)s')
+# logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 # Принцип єдиної відповідальності (SRP)
 class Book:
@@ -22,7 +23,7 @@ class LibraryInterface(ABC):
         pass
 
     @abstractmethod
-    def show_booksфвв(self) -> list[Book]:
+    def show_books(self) -> list[Book]:
         pass
 
 
@@ -34,17 +35,17 @@ class Library(LibraryInterface):
 
     def add_book(self, book: Book):
         self.books.append(book)
-        logging.info(f"Книгу '{book.title}' додано до бібліотеки.")
+        logger.info(f"Книгу '{book.title}' додано до бібліотеки.")
 
     def remove_book(self, title: str):
         self.books = [book for book in self.books if book.title != title]
-        logging.info(f"Книгу з назвою '{title}' видалено.")
+        logger.info(f"Книгу з назвою '{title}' видалено.")
 
     def show_books(self):
         if not self.books:
-            logging.info("Бібліотека порожня.")
+            logger.info("Бібліотека порожня.")
         for book in self.books:
-            logging.info(f'Title: {book.title}, Author: {book.author}, Year: {book.year}')
+            logger.info(f'Title: {book.title}, Author: {book.author}, Year: {book.year}')
 
 # Принцип відкритості/закритості (OCP)
 class LibraryManager:
@@ -82,7 +83,7 @@ def main():
             case "exit":
                 break
             case _:
-                logging.info("Invalid command. Please try again.")
+                logger.info("Invalid command. Please try again.")
 
 if __name__ == "__main__":
     main()
